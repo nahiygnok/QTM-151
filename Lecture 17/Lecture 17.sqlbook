@@ -88,6 +88,7 @@ $\qquad$ <img src="figures/view_table_sql.png" alt="drawing" width="350"/>
 -- Click "refresh" to see changes
 -- The pencil button edits column attributes
 -- The three-stripes button opens the table
+
 -- SQLBook: Markup
 <font size="5"> 
 
@@ -98,7 +99,9 @@ Try it yourself!
 -- Add your name/nationality and your neighbors'
 -- Select a new driver id (needs to be unique)
 -- Make sure to deparate arguments by a semicolon!
+INSERT INTO drivers VALUES (9, 'Evonne Kong','Chinese', 999);
 
+INSERT INTO drivers VALUES (78, 'Yueyang Yu','Chinese',998);
 
 
 -- SQLBook: Markup
@@ -146,7 +149,8 @@ Aggregate
 -- such as SUM() or AVG() 
 -- The AS is an alias which assigns a name to the aggregate statistic
 
-SELECT SUM(victories) AS sum_victories,
+SELECT count(*) AS num_rows,
+        SUM(victories) AS sum_victories,
        COUNT(*) AS num_rows,
        AVG(victories) AS mean_victories,
        MIN(victories) AS min_victories,
@@ -186,7 +190,8 @@ Try it yourself!
 with more than 60 victories
 -- SQLBook: Code
 -- Write your own code!
-
+SELECT nationality, driver_id FROM drivers
+WHERE victories > 60;
 
 
 -- SQLBook: Markup
@@ -238,7 +243,7 @@ SELECT nationality,
        MIN(victories) AS min_victories,
        MAX(victories) AS max_victories
 FROM drivers
-WHERE nationality = 'German'
+WHERE (nationality = 'German') OR (nationality = 'Chinese')
 GROUP BY nationality
 HAVING SUM(victories) > 50;
 -- SQLBook: Markup
