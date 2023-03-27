@@ -88,6 +88,16 @@ The quiz will use the Formula 1 dataset
 with column names and data types
 - You will need to use the SQL command ``` CREATE TABLE ```
 
+-- SQLBook: Code
+
+DROP TABLE IF EXISTS circuits;
+
+CREATE TABLE circuits(
+    driver_id int,
+    driver_name varchar(30),
+    nationality varchar(15),
+    victories int
+);   
 -- SQLBook: Markup
 
 <font size = "5">
@@ -101,6 +111,8 @@ from ".csv" files using the command <br>
 - Display the dataset using ``` SELECT * FROM .... ```
 - See Lecture 18 for more details
 
+-- SQLBook: Code
+COPY circuits FROM '/Users/_nahiygnok/Desktop/QTM-151/Lecture 19/data_raw/circuits.csv' WITH (DELIMITER ',', FORMAT csv, HEADER MATCH)
 -- SQLBook: Markup
 <font size = "5">
 
@@ -108,6 +120,10 @@ from ".csv" files using the command <br>
 
 - Subset one of the above datasets using ``` WHERE ```
 - Then sort the datasets in ascending or descending order 
+-- SQLBook: Code
+SELECT * FROM drivers
+WHERE (nationality = 'German') AND (driver_id = 2)
+ORDER BY victories DESC;
 -- SQLBook: Markup
 <font size = "5">
 
@@ -120,6 +136,18 @@ from ".csv" files using the command <br>
 
 
 HINT: See the end of lectures 17
+-- SQLBook: Code
+-- COUNT(DISTINCT ) computes the number of unique rows
+SELECT nationality,
+       SUM(victories) AS sum_victories,
+       AVG(victories) AS mean_victories,
+       MIN(victories) AS min_victories,
+       MAX(victories) AS max_victories,
+       COUNT(*) AS num_members   
+FROM drivers
+WHERE (nationality = 'German') OR (nationality = 'Chinese')
+GROUP BY nationality
+HAVING SUM(victories) > 50;
 -- SQLBook: Markup
 <font size = "5">
 
@@ -129,6 +157,17 @@ HINT: See the end of lectures 17
 - Then sort using ``` ORDER BY ```
 
 HINT: See the end of lectures 17 and 18
+-- SQLBook: Code
+SELECT nationality,
+       SUM(victories) AS sum_victories,
+       AVG(victories) AS mean_victories,
+       MIN(victories) AS min_victories,
+       MAX(victories) AS max_victories
+FROM drivers
+WHERE (nationality = 'German') OR (nationality = 'Chinese')
+GROUP BY nationality
+HAVING SUM(victories) > 50
+ORDER BY victories DESC/ASC;
 -- SQLBook: Markup
 <font size = "5">
 
@@ -136,3 +175,14 @@ HINT: See the end of lectures 17 and 18
 
 - Compute an aggregate statistict using ```GROUP BY```
 - Subset one of the above datasets using ``` HAVING ```
+-- SQLBook: Code
+SELECT nationality,
+       SUM(victories) AS sum_victories,
+       AVG(victories) AS mean_victories,
+       MIN(victories) AS min_victories,
+       MAX(victories) AS max_victories
+FROM drivers
+WHERE (nationality = 'German') OR (nationality = 'Chinese')
+GROUP BY nationality
+HAVING SUM(victories) > 50
+ORDER BY victories DESC/ASC;
